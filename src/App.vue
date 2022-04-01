@@ -54,6 +54,10 @@ for (let i = 0; i < dates.length; i++) {
       {{ date.start }}h - {{ date.name }} -{{ date.end }}h
     </span>
   </div>
+  <br /><br /><br />
+  <a href="https://github.com/andresabadia/agenda-logic/" target="_blank"
+    >github</a
+  >
 </template>
 
 <style>
