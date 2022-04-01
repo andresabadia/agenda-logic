@@ -1,9 +1,5 @@
 <script setup lang="ts">
-export interface DATES {
-  name: string;
-  start: number;
-  end: number;
-}
+import { DATES } from "./models/DATES";
 
 const dates: DATES[] = [
   { name: "test1", start: 8, end: 10 },
@@ -52,9 +48,9 @@ for (let i = 0; i < dates.length; i++) {
   <div
     class="level"
     v-for="positionedDate in positionedDates"
-    :key="positionedDate"
+    :key="positionedDate[0].name"
   >
-    <span class="level-entry" v-for="date in positionedDate" :key="date">
+    <span class="level-entry" v-for="date in positionedDate" :key="date.name">
       {{ date.start }}h - {{ date.name }} -{{ date.end }}h
     </span>
   </div>
