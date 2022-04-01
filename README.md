@@ -1,16 +1,44 @@
-# Vue 3 + Typescript + Vite
+```ts
+export interface DATES {
+  name: string;
+  start: number;
+  end: number;
+}
 
-This template should help get you started developing with Vue 3 and Typescript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+const dates: DATES[] = [
+  { name: "test1", start: 8, end: 10 },
+  { name: "test3", start: 9, end: 14 },
+  { name: "test2", start: 9, end: 11 },
+  { name: "test4", start: 10, end: 12 },
+  { name: "test5", start: 11, end: 12 },
+  { name: "test6", start: 12, end: 14 },
+  { name: "test7", start: 12, end: 14 },
+];
 
-## Recommended IDE Setup
+const positionedDates = [[]] as DATES[][];
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
-
-## Type Support For `.vue` Imports in TS
-
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
-
-1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+for (let i = 0; i < dates.length; i++) {
+  // first element put it to the first level of the positions array
+  if (i === 0) {
+    positionedDates[0].push(dates[i]);
+  } else {
+    // loop trough the levels of the array
+    for (let j = 0; j < positionedDates.length; j++) {
+      const lastElementInLevel =
+        positionedDates[j][positionedDates[j].length - 1];
+      const currentElement = dates[i];
+      if (lastElementInLevel.end <= currentElement.start) {
+        // does not overlaps. Add it to the current level and exit the loop
+        positionedDates[j].push(dates[i]);
+        break;
+      }
+      // else it overlaps check next level
+      // if last level overlaps. Create new level
+      if (positionedDates.length - 1 === j) {
+        positionedDates.push([dates[i]]);
+        break;
+      }
+    }
+  }
+}
+```
